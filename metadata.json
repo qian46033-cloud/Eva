@@ -1,0 +1,6 @@
+{
+  "name": "Eva · 个人档案与须知",
+  "description": "Eva · 个人档案与须知，包括相处守则、风格细则、资费明细及文档目录。",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

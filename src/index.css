@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-cinzel: 'Cinzel', serif;
+    --font-cormorant: 'Cormorant Garamond', serif;
+    --font-noto-serif: 'Noto Serif SC', serif;
+    --font-jakarta: 'Plus Jakarta Sans', sans-serif;
+  }
+}
+
+.bg-ppt-texture {
+  background-image: radial-gradient(#0000000a 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+html.dark .bg-ppt-texture {
+  background-image: radial-gradient(#ffffff0a 1px, transparent 0);
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards fadeIn;
+}
+
+@keyframes slideInRight {
+  0% {
+    opacity: 0;
+    transform: translate(24px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+@keyframes slideInLeft {
+  0% {
+    opacity: 0;
+    transform: translate(-24px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+.animate-slide-right {
+  animation: 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards slideInRight;
+}
+
+.animate-slide-left {
+  animation: 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards slideInLeft;
+}
