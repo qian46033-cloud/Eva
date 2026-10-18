@@ -58,19 +58,34 @@ export const PersonalInfoCard: React.FC<PersonalInfoCardProps> = ({
           {/* Left Column */}
           <div className="md:col-span-4 p-5 rounded-lg bg-neutral-50 dark:bg-neutral-800/40 border border-neutral-200/80 dark:border-neutral-700/60 flex flex-col justify-between space-y-4">
             <div className="space-y-4">
-              <div className="flex items-center gap-3">
+              {/* Original Full Photo */}
+              <div className="relative group">
                 <div
-                  className="w-14 h-14 rounded-full overflow-hidden border border-neutral-300 dark:border-neutral-700 shrink-0 cursor-pointer bg-white"
+                  className="w-full aspect-square rounded-lg overflow-hidden border border-neutral-300/80 dark:border-neutral-700/80 shadow-xs cursor-pointer bg-neutral-900"
                   onClick={() =>
-                    onImageClick(data.avatarUrl, `${data.nickname} 头像`)
+                    onImageClick(data.avatarUrl, `${data.nickname} 原图`)
                   }
+                  title="点击查看高清原图"
                 >
                   <img
                     src={data.avatarUrl}
                     alt={data.nickname}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
                   />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-end justify-center pb-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <span className="bg-neutral-900/85 text-white text-[10px] font-mono px-2 py-0.5 rounded backdrop-blur-xs border border-white/10">
+                      点击查看原图
+                    </span>
+                  </div>
                 </div>
+                <div className="mt-1.5 flex items-center justify-between px-0.5 text-[9px] font-mono text-neutral-400 dark:text-neutral-500 uppercase tracking-wider">
+                  <span>PHOTO / 原图</span>
+                  <span>1024 × 1024</span>
+                </div>
+              </div>
+
+              {/* Profile Identity */}
+              <div className="flex items-center justify-between border-t border-neutral-200/70 dark:border-neutral-800/80 pt-3">
                 <div>
                   <div className="flex items-center gap-1.5">
                     <span
@@ -84,13 +99,13 @@ export const PersonalInfoCard: React.FC<PersonalInfoCardProps> = ({
                     </span>
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                   </div>
-                  <p className="text-[10px] font-mono text-neutral-400 dark:text-neutral-500 mt-0.5 tracking-wider">
-                    STATUS: AVAILABLE
-                  </p>
                   <span className="text-[10px] font-mono text-neutral-500 dark:text-neutral-400">
                     {data.handle}
                   </span>
                 </div>
+                <span className="text-[9px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                  AVAILABLE
+                </span>
               </div>
 
               <div className="p-3 rounded bg-white/80 dark:bg-neutral-900/60 border border-neutral-200/60 dark:border-neutral-800 text-[11px] font-mono text-neutral-600 dark:text-neutral-300 leading-relaxed">

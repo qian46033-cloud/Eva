@@ -13,22 +13,22 @@ export interface Track {
 
 export const musicTracks: Track[] = [
   {
-    id: 'all_rise',
-    title: 'All Rise',
-    artist: 'Blue',
-    src: 'all_rise.mp3',
-    label: 'Blue - All Rise',
-    shortLabel: 'All Rise',
-    queryParam: 'all_rise',
+    id: 'one_of_the_girls',
+    title: 'One Of The Girls',
+    artist: 'The Weeknd / JENNIE / Lily-Rose Depp',
+    src: 'one_of_the_girls.mp3',
+    label: 'The Weeknd & JENNIE - One Of The Girls',
+    shortLabel: 'One Of The Girls',
+    queryParam: 'girls',
   },
   {
-    id: 'hope_torture',
-    title: '희망고문 (希望拷问)',
-    artist: '宋枝恩 (송지은)',
-    src: 'hope_torture.mp3',
-    label: '宋枝恩 - 희망고문 (希望拷问)',
-    shortLabel: '희망고문',
-    queryParam: 'hope',
+    id: 'birthday_sex',
+    title: 'Birthday Sex (Album Version)',
+    artist: 'Jeremih',
+    src: 'birthday_sex.mp3',
+    label: 'Jeremih - Birthday Sex',
+    shortLabel: 'Birthday Sex',
+    queryParam: 'bday',
   },
 ];
 
@@ -70,19 +70,19 @@ const getInitialTrack = (): Track => {
 
     if (
       version === '2' ||
-      version === 'hope' ||
-      version === 'hope_torture' ||
+      version === 'bday' ||
+      version === 'birthday_sex' ||
       hash === '#v2' ||
-      hash === '#hope'
+      hash === '#bday'
     ) {
       return musicTracks[1];
     }
     if (
       version === '1' ||
-      version === 'all_rise' ||
-      version === 'blue' ||
+      version === 'girls' ||
+      version === 'one_of_the_girls' ||
       hash === '#v1' ||
-      hash === '#allrise'
+      hash === '#girls'
     ) {
       return musicTracks[0];
     }
@@ -202,7 +202,7 @@ export const MusicPlayer: React.FC = () => {
 
     try {
       const url = new URL(window.location.href);
-      if (track.id === 'all_rise') {
+      if (track.id === 'one_of_the_girls') {
         url.searchParams.delete('v');
       } else {
         url.searchParams.set('v', track.queryParam);
@@ -216,7 +216,7 @@ export const MusicPlayer: React.FC = () => {
   const copyTrackLink = () => {
     try {
       const url = new URL(window.location.href);
-      if (currentTrack.id === 'all_rise') {
+      if (currentTrack.id === 'one_of_the_girls') {
         url.searchParams.delete('v');
       } else {
         url.searchParams.set('v', currentTrack.queryParam);
