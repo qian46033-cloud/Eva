@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Volume2, VolumeX, Check, Copy, Disc } from 'lucide-react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { Volume2, VolumeX, Check, Copy, Disc, Music } from 'lucide-react';
 
 export interface Track {
   id: string;
@@ -16,21 +16,46 @@ export const musicTracks: Track[] = [
     id: 'all_rise',
     title: 'All Rise',
     artist: 'Blue',
-    src: '/all_rise.mp3',
-    label: 'All Rise',
+    src: 'all_rise.mp3',
+    label: 'Blue - All Rise',
     shortLabel: 'All Rise',
     queryParam: 'all_rise',
   },
   {
     id: 'hope_torture',
-    title: '희망고문',
-    artist: '宋枝恩',
-    src: '/hope_torture.mp3',
-    label: '희망고문 (希望拷问)',
-    shortLabel: '希望拷问',
-    queryParam: '2',
+    title: '희망고문 (希望拷问)',
+    artist: '宋枝恩 (송지은)',
+    src: 'hope_torture.mp3',
+    label: '宋枝恩 - 희망고문 (希望拷问)',
+    shortLabel: '희망고문',
+    queryParam: 'hope',
   },
 ];
+
+/**
+ * Resolves the audio URL correctly across:
+ * - Local Vite dev server
+ * - AI Studio preview iframe
+ * - GitHub Pages under repository subpath (e.g. /Eva/ or /eva/)
+ */
+export function resolveAudioUrl(filename: string): string {
+  if (filename.startsWith('http://') || filename.startsWith('https://')) {
+    return filename;
+  }
+  const clean = filename.replace(/^\/+/, '');
+
+  if (typeof window !== 'undefined') {
+    const pathname = window.location.pathname;
+    // Extract base directory path, ensuring trailing slash
+    const baseDir = pathname.endsWith('/')
+      ? pathname
+      : pathname.slice(0, pathname.lastIndexOf('/') + 1);
+
+    return `${window.location.origin}${baseDir}${clean}`;
+  }
+
+  return `./${clean}`;
+}
 
 const getInitialTrack = (): Track => {
   if (typeof window === 'undefined') return musicTracks[0];
@@ -70,93 +95,77 @@ const getInitialTrack = (): Track => {
 export const MusicPlayer: React.FC = () => {
   const [currentTrack, setCurrentTrack] = useState<Track>(getInitialTrack);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [hasInteracted, setHasInteracted] = useState<boolean>(false);
   const [showToast, setShowToast] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string>('');
   const [hasCopied, setHasCopied] = useState<boolean>(false);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const displayToast = (msg: string) => {
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const hasUserInteractedRef = useRef<boolean>(false);
+
+  const displayToast = useCallback((msg: string) => {
     setToastMessage(msg);
     setShowToast(true);
-    setTimeout(() => setShowToast(false), 3200);
-  };
+    setTimeout(() => setShowToast(false), 3000);
+  }, []);
 
+  // Initialize and handle playback
   useEffect(() => {
-    const audio = new Audio();
-    const pathPrefix = window.location.pathname.startsWith('/Eva')
-      ? '/Eva'
-      : window.location.pathname.startsWith('/eva')
-      ? '/eva'
-      : window.location.pathname.startsWith('/xuhuanzhi')
-      ? '/xuhuanzhi'
-      : window.location.pathname.startsWith('/wanai')
-      ? '/wanai'
-      : (import.meta as any).env?.BASE_URL?.replace(/\/$/, '') || '';
-    const cleanSrc = currentTrack.src.startsWith('/')
-      ? currentTrack.src.slice(1)
-      : currentTrack.src;
-    const audioUrl = currentTrack.src.startsWith('http')
-      ? currentTrack.src
-      : pathPrefix
-      ? `${pathPrefix}/${cleanSrc}`
-      : `/${cleanSrc}`;
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const audioUrl = resolveAudioUrl(currentTrack.src);
     audio.src = audioUrl;
     audio.loop = true;
-    audio.preload = 'auto';
-    audioRef.current = audio;
 
-    const tryAutoPlay = async () => {
+    // Autoplay attempt
+    const tryAutoplay = async () => {
       try {
         await audio.play();
         setIsPlaying(true);
       } catch {
         setIsPlaying(false);
-        const onFirstInteraction = () => {
-          if (!hasInteracted && audioRef.current && audioRef.current.paused) {
-            audioRef.current
+        // Browser blocked autoplay without user gesture:
+        // listen to first tap/click to start playing
+        const handleFirstGesture = () => {
+          if (!hasUserInteractedRef.current && audio.paused) {
+            audio
               .play()
               .then(() => {
                 setIsPlaying(true);
-                displayToast(
-                  `正在播放: ${currentTrack.artist} - 《${currentTrack.title}》`
-                );
+                displayToast(`正在播放: ${currentTrack.artist} - 《${currentTrack.title}》`);
               })
               .catch(() => {});
           }
-          window.removeEventListener('click', onFirstInteraction);
-          window.removeEventListener('touchstart', onFirstInteraction);
-          window.removeEventListener('keydown', onFirstInteraction);
+          window.removeEventListener('pointerdown', handleFirstGesture);
+          window.removeEventListener('click', handleFirstGesture);
+          window.removeEventListener('touchstart', handleFirstGesture);
+          window.removeEventListener('keydown', handleFirstGesture);
         };
-        window.addEventListener('click', onFirstInteraction, { once: true });
-        window.addEventListener('touchstart', onFirstInteraction, { once: true });
-        window.addEventListener('keydown', onFirstInteraction, { once: true });
+
+        window.addEventListener('pointerdown', handleFirstGesture, { once: true });
+        window.addEventListener('click', handleFirstGesture, { once: true });
+        window.addEventListener('touchstart', handleFirstGesture, { once: true });
+        window.addEventListener('keydown', handleFirstGesture, { once: true });
       }
     };
 
-    tryAutoPlay();
-
-    return () => {
-      audio.pause();
-      audioRef.current = null;
-    };
-  }, [currentTrack.src]);
+    tryAutoplay();
+  }, [currentTrack, displayToast]);
 
   const togglePlayback = () => {
-    setHasInteracted(true);
-    if (!audioRef.current) return;
+    hasUserInteractedRef.current = true;
+    const audio = audioRef.current;
+    if (!audio) return;
 
     if (isPlaying) {
-      audioRef.current.pause();
+      audio.pause();
       setIsPlaying(false);
     } else {
-      audioRef.current
+      audio
         .play()
         .then(() => {
           setIsPlaying(true);
-          displayToast(
-            `继续播放: ${currentTrack.artist} - 《${currentTrack.title}》`
-          );
+          displayToast(`正在播放: ${currentTrack.artist} - 《${currentTrack.title}》`);
         })
         .catch((err) => {
           console.warn('Playback error:', err);
@@ -165,21 +174,42 @@ export const MusicPlayer: React.FC = () => {
   };
 
   const handleTrackSelect = (track: Track) => {
-    if (track.id !== currentTrack.id) {
-      setHasInteracted(true);
-      setCurrentTrack(track);
-      try {
-        const url = new URL(window.location.href);
-        if (track.id === 'all_rise') {
-          url.searchParams.delete('v');
-        } else {
-          url.searchParams.set('v', track.queryParam);
-        }
-        window.history.replaceState({}, '', url.toString());
-      } catch {
-        // ignore
+    hasUserInteractedRef.current = true;
+    if (track.id === currentTrack.id) {
+      if (!isPlaying && audioRef.current) {
+        audioRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
       }
-      displayToast(`已切换为: ${track.artist} - 《${track.title}》`);
+      return;
+    }
+
+    setCurrentTrack(track);
+
+    const audio = audioRef.current;
+    if (audio) {
+      const nextUrl = resolveAudioUrl(track.src);
+      audio.src = nextUrl;
+      audio.loop = true;
+      audio
+        .play()
+        .then(() => {
+          setIsPlaying(true);
+          displayToast(`已切换至: ${track.artist} - 《${track.title}》`);
+        })
+        .catch(() => {
+          setIsPlaying(false);
+        });
+    }
+
+    try {
+      const url = new URL(window.location.href);
+      if (track.id === 'all_rise') {
+        url.searchParams.delete('v');
+      } else {
+        url.searchParams.set('v', track.queryParam);
+      }
+      window.history.replaceState({}, '', url.toString());
+    } catch {
+      // ignore
     }
   };
 
@@ -202,29 +232,46 @@ export const MusicPlayer: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center gap-1.5">
-      {/* Track tabs */}
+    <div className="flex items-center gap-1.5 shrink-0">
+      {/* Hidden audio element */}
+      <audio
+        ref={audioRef}
+        preload="auto"
+        loop
+        onPlay={() => setIsPlaying(true)}
+        onPause={() => setIsPlaying(false)}
+        onError={(e) => {
+          console.warn('Audio tag load error, attempting fallback', e);
+          const audio = audioRef.current;
+          if (audio && !audio.src.includes('./')) {
+            audio.src = `./${currentTrack.src}`;
+            audio.play().catch(() => {});
+          }
+        }}
+      />
+
+      {/* Track selector buttons */}
       <div className="flex items-center bg-neutral-200/80 dark:bg-neutral-800/80 p-0.5 rounded-full border border-neutral-300/70 dark:border-neutral-700/70 text-[10px] font-mono">
-        {musicTracks.map((t) => {
+        {musicTracks.map((t, idx) => {
           const active = t.id === currentTrack.id;
           return (
             <button
               key={t.id}
               onClick={() => handleTrackSelect(t)}
-              className={`px-2 py-0.5 rounded-full transition-all cursor-pointer font-medium ${
+              className={`px-2 py-0.5 rounded-full transition-all cursor-pointer font-medium flex items-center gap-1 ${
                 active
                   ? 'bg-neutral-900 text-white dark:bg-white dark:text-neutral-950 shadow-xs'
                   : 'text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white'
               }`}
-              title={`切换至《${t.title}》- ${t.artist}`}
+              title={`点击切换到第${idx + 1}首: ${t.artist} - 《${t.title}》`}
             >
-              {t.shortLabel}
+              <span>{t.shortLabel}</span>
             </button>
           );
         })}
       </div>
 
-      {/* Play/Pause button */}
+      {/* Play/Pause Button */}
       <button
         onClick={togglePlayback}
         className={`group relative flex items-center gap-1.5 px-2.5 py-1.5 rounded-full border text-xs font-mono transition-all duration-300 cursor-pointer shadow-xs ${
@@ -232,14 +279,14 @@ export const MusicPlayer: React.FC = () => {
             ? 'bg-neutral-900 text-white dark:bg-white dark:text-neutral-950 border-neutral-900 dark:border-white shadow-neutral-900/10'
             : 'bg-white/80 dark:bg-neutral-900/80 text-neutral-600 dark:text-neutral-400 border-neutral-300 dark:border-neutral-700 hover:border-neutral-400 dark:hover:border-neutral-600'
         }`}
-        title={isPlaying ? '点击暂停音乐' : '点击播放背景音乐'}
+        title={isPlaying ? '点击暂停播放' : '点击播放音乐'}
         aria-label={isPlaying ? '暂停音乐' : '播放音乐'}
       >
         {isPlaying ? (
           <>
-            <Volume2 className="w-3.5 h-3.5 animate-pulse text-amber-500 dark:text-amber-400" />
-            <span className="max-w-[70px] sm:max-w-[100px] truncate text-[11px] font-sans">
-              {currentTrack.title}
+            <Volume2 className="w-3.5 h-3.5 animate-pulse text-amber-500 dark:text-amber-400 shrink-0" />
+            <span className="hidden sm:inline max-w-[80px] truncate text-[11px] font-sans">
+              {currentTrack.shortLabel}
             </span>
             <span className="flex items-center gap-0.5 h-3 ml-0.5">
               <span
@@ -258,8 +305,8 @@ export const MusicPlayer: React.FC = () => {
           </>
         ) : (
           <>
-            <VolumeX className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline text-[11px] font-sans">音乐</span>
+            <VolumeX className="w-3.5 h-3.5 shrink-0" />
+            <span className="hidden sm:inline text-[11px] font-sans">播放</span>
           </>
         )}
       </button>
@@ -267,8 +314,8 @@ export const MusicPlayer: React.FC = () => {
       {/* Copy link button */}
       <button
         onClick={copyTrackLink}
-        className="p-1.5 rounded-full border border-neutral-300 dark:border-neutral-700 bg-white/80 dark:bg-neutral-900/80 text-neutral-500 hover:text-neutral-900 dark:hover:text-white transition-colors cursor-pointer"
-        title="复制当前版本链接"
+        className="p-1.5 rounded-full border border-neutral-300 dark:border-neutral-700 bg-white/80 dark:bg-neutral-900/80 text-neutral-500 hover:text-neutral-900 dark:hover:text-white transition-colors cursor-pointer shrink-0"
+        title="复制当前版本链接（包含所选背景音乐）"
         aria-label="复制当前版本链接"
       >
         {hasCopied ? (
@@ -278,9 +325,9 @@ export const MusicPlayer: React.FC = () => {
         )}
       </button>
 
-      {/* Toast popup */}
+      {/* Toast notification */}
       {showToast && (
-        <div className="fixed bottom-6 right-6 z-50 bg-neutral-900/95 dark:bg-white/95 text-white dark:text-neutral-950 px-4 py-2.5 rounded-lg shadow-lg text-xs font-mono backdrop-blur-xs border border-neutral-800 dark:border-neutral-200 animate-fade-in flex items-center gap-2">
+        <div className="fixed bottom-6 right-6 z-50 bg-neutral-900/95 dark:bg-white/95 text-white dark:text-neutral-950 px-4 py-2.5 rounded-lg shadow-xl text-xs font-mono backdrop-blur-xs border border-neutral-800 dark:border-neutral-200 animate-fade-in flex items-center gap-2">
           <Disc className="w-4 h-4 animate-spin text-amber-400 shrink-0" />
           <span>{toastMessage}</span>
         </div>
