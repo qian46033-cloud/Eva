@@ -173,6 +173,11 @@ export const PersonalInfoCard: React.FC<PersonalInfoCardProps> = ({
                 <p className="text-neutral-800 dark:text-neutral-200 font-mono pl-5 text-xs font-medium">
                   {data.skyStats.usualOutfits}
                 </p>
+                {data.skyStats.outfitsNote && (
+                  <p className="text-neutral-600 dark:text-neutral-300 font-mono pl-5 text-[11px] mt-1 leading-relaxed">
+                    {data.skyStats.outfitsNote}
+                  </p>
+                )}
               </div>
 
               {/* Available Hours */}

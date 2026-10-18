@@ -48,49 +48,49 @@ export const MyStyleCard: React.FC<MyStyleCardProps> = ({
           <div className="p-5 sm:p-7 rounded-lg bg-neutral-50/70 dark:bg-neutral-800/30 border border-neutral-200/70 dark:border-neutral-800/80 text-left space-y-4">
             <div className="space-y-4 text-xs sm:text-[13.5px] text-neutral-800 dark:text-neutral-200 leading-relaxed font-light">
               <p className="tracking-wide">
-                风格偏向
-                <span className="underline underline-offset-4 decoration-neutral-700 dark:decoration-neutral-300 font-normal">
-                  常规与非常规之间
-                </span>{' '}
-                有时厚重有时日常
+                有雷点必须提前告知，如若未提前告知则踩到暗雷的情况下概不负责
               </p>
 
               <p className="tracking-wide">
-                高恋中开高走 我们彼此都需要一个
-                <span className="underline underline-offset-4 decoration-neutral-700 dark:decoration-neutral-300 font-normal">
-                  拉近距离
-                </span>
-                的过程
+                如下指定单我会尽可能的让你不虚此行，但单内单后不满意仅接受退款不接受差评客诉，感谢理解
               </p>
 
               <p className="tracking-wide">
-                打字速度适中，
-                <span className="underline underline-offset-4 decoration-neutral-700 dark:decoration-neutral-300 font-normal">
-                  微文白话互助
-                </span>
-                ，偶尔萎靡走低无
+                请不要将单外的负面情绪带入单内，如果非要我做受气包的话烦请单价*10
               </p>
 
               <p className="tracking-wide">
-                大多数情况下恋感、位次和走向通常由妳带给我的感受来决定
+                如果你在单内出现任何恶搞行为即默认我下线你送单，后续将不提供售后并永拒
               </p>
 
               <p className="tracking-wide">
-                于我而言，
-                <span className="underline underline-offset-4 decoration-neutral-700 dark:decoration-neutral-300 font-normal">
-                  恋为主
-                </span>
-                ，逻辑为辅
+                不会讲话没关系，请在我引导的情况下努力尝试回复，婉拒单口半单口
               </p>
 
               <p className="tracking-wide">
-                <span className="underline underline-offset-4 decoration-neutral-700 dark:decoration-neutral-300 font-normal">
-                  回合制交流
-                </span>{' '}
-                不打断彼此讲话是一种
-                <span className="underline underline-offset-4 decoration-neutral-700 dark:decoration-neutral-300 font-normal">
-                  相互的尊重
-                </span>
+                打字速度适中，微文白话互助，如需很快的打字速度、极致的白话或文艺，请寻找其他的老师
+              </p>
+
+              <div className="tracking-wide space-y-0.5">
+                <p>既不是绝对上位也不做绝对下位，彼此怎么舒服怎么来</p>
+                <p>除自带硬性要求外，下单默认接受恋感、位次和风格走向由你带给我的感受来决定</p>
+              </div>
+
+              <div className="tracking-wide space-y-0.5">
+                <p>于我而言，恋为主，逻辑为辅</p>
+                <p>婉拒任何以辩论争执为目的或抱有攻击、审视意味的人</p>
+              </div>
+
+              <p className="tracking-wide">
+                回合制交流，不打断彼此讲话是一种相互的尊重，打断三次默认送单
+              </p>
+
+              <p className="tracking-wide">
+                SM恶趣味等风格的施展程度因人而异，无论接受与否，我都会在单前额外为你准备一份表格，请如实填写
+              </p>
+
+              <p className="tracking-wide">
+                如果你自身代入感很低，那么我给出的方案是单内走低无恋聊聊天谈谈心，也许我们会在某个方面很投缘
               </p>
             </div>
           </div>

@@ -37,7 +37,7 @@ export const WelcomeCard: React.FC<WelcomeCardProps> = ({
           {/* Left Text */}
           <div className="md:col-span-7 space-y-4 text-left">
             <div className="font-serif italic text-2xl sm:text-3xl text-neutral-400 dark:text-neutral-500 font-light tracking-wide">
-              Love must be beyond recognition.
+              404 Not Found
             </div>
 
             <div>

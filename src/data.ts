@@ -61,6 +61,7 @@ export interface ProfileData {
     wings: string;
     height: string;
     usualOutfits: string;
+    outfitsNote?: string;
     onlineTime: string;
     favoriteMaps: string[];
   };
@@ -100,7 +101,7 @@ export interface ProfileData {
 export const profileData: ProfileData = {
   siteTitle: 'Eva',
   siteSubtitle: 'Eva',
-  welcomeGreeting: '痛苦是揭秘爱的唯一途径。',
+  welcomeGreeting: '谢谢你来见我',
   welcomeIntro: '20 LeH 土象金牛 ENTJ/ENFP 中御/青御',
   avatarUrl: avatarImg,
   bannerUrl: avatarImg,
@@ -112,14 +113,15 @@ export const profileData: ProfileData = {
   contactWeChatOrQQ: 'sky_hen_07',
   contactNote: '请备注预约',
   styleTags: ['失色律'],
-  welcomeFooterQuote: '之于她，爱是规训。',
+  welcomeFooterQuote: '痛苦是揭秘爱的唯一途径。',
   ipLocation: '失色律',
-  ipSub: '眼泪做成的暴力',
+  ipSub: '再变坏一点吧 让我在天使中认出你',
   skyStats: {
     server: 'ios',
     wings: '您抬爱。',
     height: '您抬爱。',
     usualOutfits: '二级白斗/蝙蝠斗 公主/正太',
+    outfitsNote: '指定其他装扮如果衣柜里有则不额外收取费用',
     onlineTime: '固定可取时段20:00-23:00',
     favoriteMaps: ['暮土荒原', '千鸟城星空', '暴风眼落石区', '雨林深处'],
   },
@@ -357,15 +359,17 @@ export const profileData: ProfileData = {
 };
 
 export const guidelinesList: string[] = [
-  '稳定三无以上，主接病恋 虐恋',
-  '扣6/人身攻击/乱跑等极不配合行为，我有权叫停下线',
-  '低无若觉得我说话过于刻薄请说：让ivy来吧',
-  '非提前说明不太想和你打辩论赛 我们好好谈恋爱好吗',
-  '对全程反骨/无逻辑硬压的会直接转贬低/血暴 无论是否触雷 请互相尊重',
-  '剖析的前提是你愿意与我交流 我无法在从头到尾的沉默中了解你',
-  '不接能力外的单 要求一大串|自认为很难接等',
-  '个人生病服药原因 极少情况下会记差时间感谢谅解',
-  '拒素雪一切',
+  '有雷点必须提前告知，如若未提前告知则踩到暗雷的情况下概不负责',
+  '如下指定单我会尽可能的让你不虚此行，但单内单后不满意仅接受退款不接受差评客诉，感谢理解',
+  '请不要将单外的负面情绪带入单内，如果非要我做受气包的话烦请单价*10',
+  '如果你在单内出现任何恶搞行为即默认我下线你送单，后续将不提供售后并永拒',
+  '不会讲话没关系，请在我引导的情况下努力尝试回复，婉拒单口半单口',
+  '打字速度适中，微文白话互助，如需很快的打字速度、极致的白话或文艺，请寻找其他的老师',
+  '既不是绝对上位也不做绝对下位，彼此怎么舒服怎么来\n除自带硬性要求外，下单默认接受恋感、位次和风格走向由你带给我的感受来决定',
+  '于我而言，恋为主，逻辑为辅\n婉拒任何以辩论争执为目的或抱有攻击、审视意味的人',
+  '回合制交流，不打断彼此讲话是一种相互的尊重，打断三次默认送单',
+  'SM恶趣味等风格的施展程度因人而异，无论接受与否，我都会在单前额外为你准备一份表格，请如实填写',
+  '如果你自身代入感很低，那么我给出的方案是单内走低无恋聊聊天谈谈心，也许我们会在某个方面很投缘',
 ];
 
 export const highlightGuidelines: string[] = [
