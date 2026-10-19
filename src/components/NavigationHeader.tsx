@@ -76,7 +76,7 @@ export const NavigationHeader: React.FC<NavigationHeaderProps> = ({
           </div>
 
           {/* Page Counter */}
-          <span className="text-[11px] font-mono text-neutral-400 dark:text-neutral-500">
+          <span className="text-[11px] font-mono text-neutral-400 dark:text-neutral-500 hidden md:inline">
             {currentNum}/04页
           </span>
 
