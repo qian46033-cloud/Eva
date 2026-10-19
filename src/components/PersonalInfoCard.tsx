@@ -55,65 +55,45 @@ export const PersonalInfoCard: React.FC<PersonalInfoCardProps> = ({
 
         {/* Content Grid */}
         <div className="py-6 grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
-          {/* Left Column */}
+          {/* Column A: Left Profile & Stamp (4 cols) */}
           <div className="md:col-span-4 p-5 rounded-lg bg-neutral-50 dark:bg-neutral-800/40 border border-neutral-200/80 dark:border-neutral-700/60 flex flex-col justify-between space-y-4">
             <div className="space-y-4">
-              {/* Original Full Photo */}
-              <div className="relative group">
+              <div className="flex items-center gap-3">
+                {/* Subtle small stamp avatar */}
                 <div
-                  className="w-full aspect-square rounded-lg overflow-hidden border border-neutral-300/80 dark:border-neutral-700/80 shadow-xs cursor-pointer bg-neutral-900"
-                  onClick={() =>
-                    onImageClick(data.avatarUrl, `${data.nickname} 原图`)
-                  }
-                  title="点击查看高清原图"
+                  className="w-14 h-14 rounded-full overflow-hidden border border-neutral-300 dark:border-neutral-700 shrink-0 cursor-pointer bg-white"
+                  onClick={() => onImageClick(data.avatarUrl, `${data.nickname} 头像`)}
                 >
                   <img
                     src={data.avatarUrl}
                     alt={data.nickname}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                    className="w-full h-full object-cover"
                   />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-end justify-center pb-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <span className="bg-neutral-900/85 text-white text-[10px] font-mono px-2 py-0.5 rounded backdrop-blur-xs border border-white/10">
-                      点击查看原图
-                    </span>
-                  </div>
                 </div>
-                <div className="mt-1.5 flex items-center justify-between px-0.5 text-[9px] font-mono text-neutral-400 dark:text-neutral-500 uppercase tracking-wider">
-                  <span>PHOTO / 原图</span>
-                  <span>1024 × 1024</span>
-                </div>
-              </div>
-
-              {/* Profile Identity */}
-              <div className="flex items-center justify-between border-t border-neutral-200/70 dark:border-neutral-800/80 pt-3">
                 <div>
                   <div className="flex items-center gap-1.5">
                     <span
-                      style={{
-                        fontFamily:
-                          '"SimSun", "Songti SC", "STSong", "Noto Serif SC", serif',
-                      }}
+                      style={{ fontFamily: '"SimSun", "Songti SC", "STSong", "Noto Serif SC", serif' }}
                       className="font-normal text-neutral-900 dark:text-white text-base tracking-wide"
                     >
                       {data.nickname}
                     </span>
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                   </div>
+                  <p className="text-[10px] font-mono text-neutral-400 dark:text-neutral-500 mt-0.5 tracking-wider">
+                    STATUS: AVAILABLE
+                  </p>
                   <span className="text-[10px] font-mono text-neutral-500 dark:text-neutral-400">
                     {data.handle}
                   </span>
                 </div>
-                <span className="text-[9px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
-                  AVAILABLE
-                </span>
               </div>
-
+              {/* Identity statement */}
               <div className="p-3 rounded bg-white/80 dark:bg-neutral-900/60 border border-neutral-200/60 dark:border-neutral-800 text-[11px] font-mono text-neutral-600 dark:text-neutral-300 leading-relaxed">
                 {data.welcomeIntro}
               </div>
             </div>
           </div>
-
           {/* Right Column */}
           <div className="md:col-span-8 flex flex-col justify-center space-y-3">
             <div className="space-y-3 text-left">

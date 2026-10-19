@@ -1,4 +1,4 @@
-import avatarImg from './assets/cross_shadow_avatar.jpg';
+import avatarImg from './assets/cat_avatar.jpg';
 
 export interface CategoryItem {
   number: string;
@@ -134,8 +134,8 @@ export const profileData: ProfileData = {
   styleDetail: {
     primary: [
       '中高恋 高攻低防 引导诱哄 掠夺索取',
-      '轻剖析 高控制 微暴力 软色情',
-      'SM恶趣味',
+      '轻剖析 强控制 高占有 微暴力 软色情',
+      'SM 恶趣味',
     ],
     secondary: ['轻浮系 重力系 恨海情天 低无逻温'],
   },

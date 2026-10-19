@@ -88,28 +88,29 @@ export const WelcomeCard: React.FC<WelcomeCardProps> = ({
             </p>
           </div>
 
-          {/* Right Image - Original Photo */}
+          {/* Right Column: Architectural Circle Framing (5 cols) matching Image 2 */}
           <div className="md:col-span-5 flex flex-col items-center justify-center">
-            <div className="relative w-full max-w-[220px] sm:max-w-[250px] group">
+            <div className="relative w-44 h-44 sm:w-52 sm:h-52 flex items-center justify-center">
+              {/* Outer decorative geometric circle arc */}
+              <div className="absolute inset-0 rounded-full border border-neutral-200 dark:border-neutral-800"></div>
+              <div className="absolute -inset-2 rounded-full border border-dashed border-neutral-300/70 dark:border-neutral-800/60 pointer-events-none"></div>
+
+              {/* Minimal Avatar Circle */}
               <div
-                className="relative w-full aspect-square rounded-xl overflow-hidden border border-neutral-300/80 dark:border-neutral-700/80 shadow-md cursor-pointer bg-neutral-900"
-                onClick={() => onImageClick(data.avatarUrl, `${data.nickname} 原图`)}
-                title="点击查看高清原图"
+                className="relative w-36 h-36 sm:w-40 sm:h-40 rounded-full overflow-hidden border-2 border-white dark:border-neutral-800 shadow-md cursor-pointer group bg-white"
+                onClick={() => onImageClick(data.avatarUrl, `${data.nickname} 头像`)}
               >
                 <img
                   src={data.avatarUrl}
                   alt={data.nickname}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-end justify-center pb-2.5 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <span className="bg-neutral-900/85 text-white text-[10px] font-mono px-2.5 py-0.5 rounded backdrop-blur-xs border border-white/10">
-                    点击查看原图
-                  </span>
-                </div>
+                <div className="absolute inset-0 bg-neutral-950/10 group-hover:opacity-0 transition-opacity"></div>
               </div>
-              <div className="mt-2.5 flex items-center justify-between px-1 text-[9px] font-mono text-neutral-400 dark:text-neutral-500 uppercase tracking-widest">
-                <span>ORIGINAL PHOTO</span>
-                <span>ARCHIVE · 2026</span>
+
+              {/* Architectural Axis label */}
+              <div className="absolute -bottom-3 bg-white dark:bg-neutral-900 px-2 py-0.5 border border-neutral-200 dark:border-neutral-800 text-[9px] font-mono text-neutral-400 dark:text-neutral-500 tracking-widest uppercase">
+                ARCHIVE · 2026
               </div>
             </div>
           </div>
