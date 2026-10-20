@@ -14,16 +14,6 @@ export interface Track {
 
 export const musicTracks: Track[] = [
   {
-    id: 'one_of_the_girls',
-    title: 'One Of The Girls',
-    artist: 'The Weeknd / JENNIE / Lily-Rose Depp',
-    src: 'one_of_the_girls.mp3',
-    label: 'The Weeknd & JENNIE - One Of The Girls',
-    shortLabel: 'One Of The Girls',
-    mobileLabel: 'Girls',
-    queryParam: 'girls',
-  },
-  {
     id: 'birthday_sex',
     title: 'Birthday Sex (Album Version)',
     artist: 'Jeremih',
@@ -32,6 +22,16 @@ export const musicTracks: Track[] = [
     shortLabel: 'Birthday Sex',
     mobileLabel: 'Birthday',
     queryParam: 'bday',
+  },
+  {
+    id: 'one_of_the_girls',
+    title: 'One Of The Girls',
+    artist: 'The Weeknd / JENNIE / Lily-Rose Depp',
+    src: 'one_of_the_girls.mp3',
+    label: 'The Weeknd & JENNIE - One Of The Girls',
+    shortLabel: 'One Of The Girls',
+    mobileLabel: 'Girls',
+    queryParam: 'girls',
   },
 ];
 
@@ -80,20 +80,20 @@ const getInitialTrack = (): Track => {
 
     if (
       version === '2' ||
-      version === 'bday' ||
-      version === 'birthday' ||
-      version === 'birthday_sex' ||
+      version === 'girls' ||
+      version === 'one_of_the_girls' ||
       hash === '#v2' ||
-      hash === '#bday'
+      hash === '#girls'
     ) {
       return musicTracks[1];
     }
     if (
       version === '1' ||
-      version === 'girls' ||
-      version === 'one_of_the_girls' ||
+      version === 'bday' ||
+      version === 'birthday' ||
+      version === 'birthday_sex' ||
       hash === '#v1' ||
-      hash === '#girls'
+      hash === '#bday'
     ) {
       return musicTracks[0];
     }
@@ -195,7 +195,7 @@ export const MusicPlayer: React.FC = () => {
     // Update URL query parameter
     try {
       const url = new URL(window.location.href);
-      if (track.id === 'one_of_the_girls') {
+      if (track.id === 'birthday_sex') {
         url.searchParams.delete('v');
       } else {
         url.searchParams.set('v', track.queryParam);
@@ -216,7 +216,7 @@ export const MusicPlayer: React.FC = () => {
   const copyTrackLink = () => {
     try {
       const url = new URL(window.location.href);
-      if (currentTrack.id === 'one_of_the_girls') {
+      if (currentTrack.id === 'birthday_sex') {
         url.searchParams.delete('v');
       } else {
         url.searchParams.set('v', currentTrack.queryParam);
