@@ -92,6 +92,7 @@ export interface ProfileData {
   scenarios: ScenarioItem[];
   categories: CategoryItem[];
   step4Quote: string[];
+  welcomeNickname?: string;
   notices: NoticeSection[];
   boardReviews: BoardReview[];
   companionReviews: BoardReview[];
@@ -106,7 +107,8 @@ export const profileData: ProfileData = {
   avatarUrl: avatarImg,
   bannerUrl: avatarImg,
   infoImageUrl: avatarImg,
-  nickname: 'Eva',
+  nickname: 'Eva/商心慈',
+  welcomeNickname: 'Eva/商心慈',
   handle: '@eva',
   badgeTitle: 'VERIFIED',
   contactUid: '8829-4102-991',
@@ -126,10 +128,10 @@ export const profileData: ProfileData = {
     favoriteMaps: ['暮土荒原', '千鸟城星空', '暴风眼落石区', '雨林深处'],
   },
   pricingNotice: [
-    '41r/h 23r/0.5h 凌晨非我原因默认+5r 旁观10r/人 如若我没有你指定的装扮则+8r 高擦+10r',
+    '43r/h 24r/0.5h 凌晨非我原因默认+5r 旁观10r/人 如若我没有你指定的装扮则+8r 高擦+10r',
   ],
   pricingRateText:
-    '41r/h 23r/0.5h 凌晨非我原因默认+5r 旁观10r/人 如若我没有你指定的装扮则+8r 高擦+10r',
+    '43r/h 24r/0.5h 凌晨非我原因默认+5r 旁观10r/人 如若我没有你指定的装扮则+8r 高擦+10r',
   experienceNotice: ['圈龄两年，恋感可选', 'le拒男板'],
   styleDetail: {
     primary: [
@@ -165,7 +167,7 @@ export const profileData: ProfileData = {
       '*1h单分两次取需补加价',
     ],
   },
-  step2Quote: ['我想让妳自愿的，把自己交给我'],
+  step2Quote: ['痛苦是揭秘爱的唯一途径。'],
   scenarios: [
     {
       number: '01',
@@ -229,11 +231,7 @@ export const profileData: ProfileData = {
       key: 'memories',
     },
   ],
-  step4Quote: [
-    '我们看不清彼此的面目，不知道对方的来历',
-    '我们会暂时忘却了羞耻顾忌，将我们那颗赤裸裸的心挖出来',
-    '捧在手上互相观看片刻',
-  ],
+  step4Quote: ['再变坏一点吧 让我在天使中认出你'],
   notices: [
     {
       title: '预约与相处守则',

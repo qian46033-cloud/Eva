@@ -52,7 +52,7 @@ export const WelcomeCard: React.FC<WelcomeCardProps> = ({
                   }}
                   className="text-3xl sm:text-4xl font-normal text-neutral-900 dark:text-white tracking-[0.2em] leading-none"
                 >
-                  {data.nickname}
+                  {data.welcomeNickname || 'Eva/商心慈'}
                 </h1>
                 <span className="text-[9px] font-mono px-2 py-0.5 rounded bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 uppercase tracking-widest shrink-0 inline-flex items-center">
                   {data.badgeTitle}
