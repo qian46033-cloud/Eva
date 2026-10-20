@@ -1,4 +1,4 @@
-import avatarImg from './assets/cat_avatar.jpg';
+import avatarImg from './assets/avatar.jpeg';
 
 export interface CategoryItem {
   number: string;
