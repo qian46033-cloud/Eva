@@ -101,7 +101,7 @@ export interface ProfileData {
 export const profileData: ProfileData = {
   siteTitle: 'Eva',
   siteSubtitle: 'Eva',
-  welcomeGreeting: '谢谢你来见我',
+  welcomeGreeting: '恶魔要纠缠你 而我正是',
   welcomeIntro: '20 LeH 土象金牛 ENTJ/ENFP 中御/青御',
   avatarUrl: avatarImg,
   bannerUrl: avatarImg,
@@ -113,9 +113,9 @@ export const profileData: ProfileData = {
   contactWeChatOrQQ: 'sky_hen_07',
   contactNote: '请备注预约',
   styleTags: ['失色律'],
-  welcomeFooterQuote: '痛苦是揭秘爱的唯一途径。',
+  welcomeFooterQuote: '要和你相称 骨骼脉搏心神',
   ipLocation: '失色律',
-  ipSub: '再变坏一点吧 让我在天使中认出你',
+  ipSub: '谢谢你来见我',
   skyStats: {
     server: 'ios',
     wings: '您抬爱。',
